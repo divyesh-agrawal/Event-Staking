@@ -4,6 +4,7 @@ import {
   MESSAGES,
   REGULAR_EXPRESSIONS,
 } from '@constants/commonConstants';
+import { useSelector } from 'react-redux';
 
 const { email: emailRegExp, password: passwordRegExp } = REGULAR_EXPRESSIONS;
 
@@ -64,16 +65,52 @@ const clearData = ({ key }) => {
 };
 
 /** To check if User is Logged In */
-const isUserAuthenticated = () => {
-  if (localStorage.getItem(btoa(LOCAL_STORAGE_KEY))) {
-    const loginData = JSON.parse(
-      atob(localStorage.getItem(btoa(LOCAL_STORAGE_KEY)))
+const isUserAuthenticated = async () => {
+  const { ethereum } = window;
+  try {
+    if (!ethereum) {
+      console.log('Not Ethereum');
+      return false;
+    }
+
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+    console.log(
+      '🚀 ~ file: commonUtils.js:77 ~ isUserAuthenticated ~ accounts:',
+      accounts
     );
-    const currentDate = new Date();
-    const expireDate = new Date(loginData.expire);
-    return expireDate > currentDate;
+
+    if (accounts.length) {
+      console.log('found');
+      return true;
+    }
+  } catch (error) {
+    console.log(error);
   }
   return false;
+};
+
+const checkUser = () => {
+  const { isUser } = useSelector((state) => state.auth);
+  console.log('🚀 ~ file: commonUtils.js:91 ~ checkUser ~ isUser:', isUser);
+
+  return isUser;
+};
+
+const connectWallet = async () => {
+  try {
+    if (!ethereum) return alert('Please install MetaMask.');
+
+    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+    console.log(
+      '🚀 ~ file: commonUtils.js:104 ~ connectWal ~ accounts:',
+      accounts
+    );
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+
+    throw new Error('No ethereum object');
+  }
 };
 
 /** To Fetch User Data from Local Storage */
@@ -93,6 +130,8 @@ const getNestedKeys = (str, obj) => {
 
 export {
   isUserAuthenticated,
+  checkUser,
+  connectWallet,
   clearData,
   getUserData,
   getNestedKeys,

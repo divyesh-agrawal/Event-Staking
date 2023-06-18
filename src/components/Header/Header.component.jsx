@@ -1,15 +1,12 @@
 import React from 'react';
 
-import {
-  Box,
-  Divider,
-} from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import PropTypes from 'prop-types';
 
 import {
   HeaderAppBar,
   HeaderBox,
-  HeaderToolBar
+  HeaderToolBar,
 } from '@components/Header/Header.styles';
 import Menu from '@components/Menu';
 import { ACCOUNT_MENU } from '@constants/commonConstants';
@@ -20,27 +17,22 @@ import { ACCOUNT_MENU } from '@constants/commonConstants';
  * @param username - Name of User
  */
 const Header = (headerProps) => {
-  const {
-    logout,
-    avatar,
-    username,
-  } = headerProps;
+  const { logout, avatar } = headerProps;
 
   return (
     <HeaderBox>
       <HeaderAppBar>
         <HeaderToolBar>
+          <Menu menuItems={ACCOUNT_MENU} noText isIcon />
           <Menu
-                menuItems={ACCOUNT_MENU}
-                noText
-                isIcon
-              />
-          <Menu
-                menuItems={ACCOUNT_MENU}
-                userName={username}
-                {...(avatar && { avatarImg: avatar })}
-                logout={logout}
-              />
+            menuItems={ACCOUNT_MENU}
+            userName={`${window.ethereum.selectedAddress.slice(
+              0,
+              5
+            )}....${window.ethereum.selectedAddress.slice(-4)}`}
+            {...(avatar && { avatarImg: avatar })}
+            logout={logout}
+          />
         </HeaderToolBar>
         <Divider sx={{ zIndex: -2 }} />
       </HeaderAppBar>

@@ -1,22 +1,36 @@
-import React from "react";
+import React, { useEffect } from 'react';
 
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { RouterProvider } from 'react-router-dom';
 
 import SnackBar from '@components/SnackBar';
-import AuthenticationContainer from '@containers/AuthenticationContainer';
 import Router from '@routes/Router';
 import THEME from '@theme/theme';
+import { isUserAuthenticated } from './utils/commonUtils';
+import { useDispatch } from 'react-redux';
+import { setUser } from './redux/slice/authSlice';
 
-const App = () => (
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => {
+      const isUser = await isUserAuthenticated();
+      console.log('🚀 ~ file: App.jsx:20 ~ isUser:', isUser);
+      if (isUser) {
+        dispatch(setUser());
+      }
+    })();
+  }, []);
+
+  return (
     <ThemeProvider theme={THEME}>
-    <CssBaseline />
-    <SnackBar />
-    <AuthenticationContainer>
+      <CssBaseline />
+      <SnackBar />
       <RouterProvider router={Router} />
-    </AuthenticationContainer>
-  </ThemeProvider>
-);
+    </ThemeProvider>
+  );
+};
 
 export default App;

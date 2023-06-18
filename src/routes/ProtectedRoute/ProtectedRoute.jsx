@@ -3,7 +3,7 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import ROUTE_PATHS from '@constants/routeConstants';
-import { isUserAuthenticated } from '@utils/commonUtils';
+import { checkUser, isUserAuthenticated } from '@utils/commonUtils';
 
 const { root, home } = ROUTE_PATHS;
 
@@ -14,14 +14,10 @@ const ProtectedRoute = (props) => {
   const location = useLocation();
 
   /** Checks if key is present in local storage, and if yes then checks if data is expired */
-  if (true) {
-    return location.pathname === loginPath ? (
-      <Navigate to={home} />
-    ) : (
-      component
-    );
+  if (checkUser()) {
+    return location.pathname === loginPath ? <Navigate to={home} /> : component;
   }
-  return location.pathname === loginPath ? component: <Navigate to={root} />;
+  return location.pathname === loginPath ? component : <Navigate to={root} />;
 };
 
 ProtectedRoute.defaultProps = {
