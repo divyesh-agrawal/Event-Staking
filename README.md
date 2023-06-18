@@ -6,7 +6,7 @@ This Project is part of JTG Hackathon 2023 and it aims to develop a smart contra
 
 ## Technologies Used
 
-Solidity, NodeJS, React, Blockchain and MongoDB
+Solidity, NodeJS, React and Blockchain
 
 ## Prerequisites
 
