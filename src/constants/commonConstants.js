@@ -3,6 +3,8 @@ import Person from '@mui/icons-material/Person';
 
 import ROUTE_PATHS from './routeConstants';
 
+import abi from './abi.json';
+
 const { myProfile: profilePath, logout: logoutPath } = ROUTE_PATHS;
 
 /** Account Menu definitions */
@@ -69,8 +71,13 @@ const INPUT_TYPES = {
   password: 'password',
 };
 
+const contractAddress = '0x97285a96c74cb4b068c151efbcb978e4f8c49743';
+const contractABI = abi;
+
 export {
   ACCOUNT_MENU,
+  contractAddress,
+  contractABI,
   REGULAR_EXPRESSIONS,
   LOCAL_STORAGE_KEY,
   SNACKBAR_AUTO_HIDE_DURATION,

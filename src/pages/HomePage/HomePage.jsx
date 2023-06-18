@@ -12,6 +12,7 @@ import moment from 'moment';
 
 import Calendar from '@components/Calendar';
 import Layout from '@layouts/BaseLayout';
+import { getAllPersonEvents } from '@utils/commonUtils';
 
 import StyledPaper from './HomePage.styles';
 
@@ -32,6 +33,12 @@ const Home = () => {
     ...eventInitialValues,
   });
 
+  useEffect(() => {
+    (async () => {
+      console.log(await getAllPersonEvents());
+    })();
+  }, []);
+
   const events = {
     1: {
       id: 1,
@@ -45,14 +52,14 @@ const Home = () => {
 
   const [eventFormData, setEventFormData] = useState({ ...eventInitialValues });
 
-  useEffect(
-    () => {
-      console.log(eventFormData);
-      console.log(currentEventDetails);
-    },
-    [eventFormData],
-    currentEventDetails
-  );
+  // useEffect(
+  //   () => {
+  //     console.log(eventFormData);
+  //     console.log(currentEventDetails);
+  //   },
+  //   [eventFormData],
+  //   currentEventDetails
+  // );
 
   const handleDateClick = (viewType, startTime, endTime) => {
     if (viewType !== 'dayGridMonth') {

@@ -34,7 +34,7 @@ const LoginContainer = () => (
             typography: 'subtitle2',
             paddingBlock: 10,
             paddingInline: 30,
-            textAlign: 'center',
+            margin: '0 auto',
           }}
           onClick={connectWallet}
         >

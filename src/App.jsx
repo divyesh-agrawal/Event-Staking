@@ -17,7 +17,6 @@ const App = () => {
   useEffect(() => {
     (async () => {
       const isUser = await isUserAuthenticated();
-      console.log('🚀 ~ file: App.jsx:20 ~ isUser:', isUser);
       if (isUser) {
         dispatch(setUser());
       }
